@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Card, Col, Row } from "react-bootstrap";
 
 import { Link } from "react-router-dom";
-import type { Result } from "../interfaces/Api";
+import type { Article, Result } from "../interfaces/Api";
 
 const SingleArticle = () => {
   const [articles, setArticles] = useState<Result[]>([]);
@@ -12,8 +12,8 @@ const SingleArticle = () => {
       const resp = await fetch("https://api.spaceflightnewsapi.net/v4/articles");
 
       if (resp.ok) {
-        const arrOfArticles = await resp.json();
-        setArticles(arrOfArticles.results);
+        const data: Article = await resp.json();
+        setArticles(data.results);
       } else {
         throw new Error();
       }

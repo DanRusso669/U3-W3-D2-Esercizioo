@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { Button, Image } from "react-bootstrap";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Image } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
 import type { Result } from "../interfaces/Api";
 
 const ArticleDetails = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const [data, setData] = useState<Result | null>(null);
 
@@ -14,7 +13,7 @@ const ArticleDetails = () => {
       const resp = await fetch("https://api.spaceflightnewsapi.net/v4/articles/" + id);
 
       if (resp.ok) {
-        const article = await resp.json();
+        const article: Result = await resp.json();
         setData(article);
       } else {
         throw new Error();
@@ -26,8 +25,11 @@ const ArticleDetails = () => {
 
   useEffect(() => {
     fetchArticleDetails();
-    console.log(data);
   }, []);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <>
@@ -35,7 +37,7 @@ const ArticleDetails = () => {
         <>
           <h1 className="text-white text-center my-3">{data.title}</h1>
           <div className="d-flex">
-            <Image src={data.image_url} />
+            <Image src={data.image_url} className="img-fluid" style={{ maxWidth: 400 }} />
             <div className="d-flex flex-column align-items-end">
               <p className="ms-2 text-white">{data.summary}</p>
               <p className="ms-2 text-white my-0">{data.authors[0].name}</p>
@@ -44,15 +46,9 @@ const ArticleDetails = () => {
               <Link className="text-danger " to={data.url}>
                 See the source from {data.news_site}
               </Link>
-              <Button
-                className="mt-auto"
-                variant="danger"
-                onClick={() => {
-                  navigate("/");
-                }}
-              >
-                Go Back
-              </Button>
+              <Link to={"/"} className="btn bg-danger mt-auto">
+                Go back
+              </Link>
             </div>
           </div>
         </>

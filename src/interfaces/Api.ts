@@ -17,8 +17,13 @@ export interface Result {
   updated_at: Date;
   featured: boolean;
   launches: Launch[];
+  events: Event[];
 }
 
+export interface Event {
+  event_id: number;
+  provider: string;
+}
 export interface Author {
   name: string;
   socials: null;

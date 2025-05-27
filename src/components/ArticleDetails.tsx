@@ -36,11 +36,13 @@ const ArticleDetails = () => {
           <h1 className="text-white text-center my-3">{data.title}</h1>
           <div className="d-flex">
             <Image src={data.image_url} />
-            <div className="d-flex flex-column align-items-end ">
+            <div className="d-flex flex-column align-items-end">
               <p className="ms-2 text-white">{data.summary}</p>
+              <p className="ms-2 text-white my-0">{data.authors[0].name}</p>
               <p className="ms-2 text-white">{new Date(data.published_at).toLocaleDateString()}</p>
+              {data.launches[0] && <p className="ms-2 text-white my-0">{data.launches[0].provider}</p>}
               <Link className="text-danger " to={data.url}>
-                See the source {data.news_site}
+                See the source from {data.news_site}
               </Link>
               <Button
                 className="mt-auto"

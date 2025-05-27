@@ -1,0 +1,64 @@
+import { useEffect, useState } from "react";
+import { Button, Image } from "react-bootstrap";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import type { Result } from "../interfaces/Api";
+
+const ArticleDetails = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const [data, setData] = useState<Result | null>(null);
+
+  const fetchArticleDetails = async () => {
+    try {
+      const resp = await fetch("https://api.spaceflightnewsapi.net/v4/articles/" + id);
+
+      if (resp.ok) {
+        const article = await resp.json();
+        setData(article);
+      } else {
+        throw new Error();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchArticleDetails();
+    console.log(data);
+  }, []);
+
+  return (
+    <>
+      {data ? (
+        <>
+          <h1 className="text-white text-center my-3">{data.title}</h1>
+          <div className="d-flex">
+            <Image src={data.image_url} />
+            <div className="d-flex flex-column align-items-end ">
+              <p className="ms-2 text-white">{data.summary}</p>
+              <p className="ms-2 text-white">{new Date(data.published_at).toLocaleDateString()}</p>
+              <Link className="text-danger " to={data.url}>
+                See the source {data.news_site}
+              </Link>
+              <Button
+                className="mt-auto"
+                variant="danger"
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                Go Back
+              </Button>
+            </div>
+          </div>
+        </>
+      ) : (
+        <p>Loading...</p>
+      )}
+    </>
+  );
+};
+
+export default ArticleDetails;

@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+  background-image: url("https://images.unsplash.com/photo-1537420327992-d6e192287183?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+.articleRelease {
+  font-size: 12px;
+}
